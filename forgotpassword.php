@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +10,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <form action="login_check.php" method="post" >
+    <form action="email_check.php" method="post" >
+    <?php if (isset($_GET["error"])) {
+            echo "<p>Usuario o contraseña incorrectos. Inténtalo de nuevo por favor.</p>";
+          } ?>
+           <?php if (isset($_GET["success"])) {
+            echo "<p>Correo enviado exitosamente.</p>";
+          } ?>
         <h3>Password recovery</h3>
         <label class="form-label"><b>Correo</b></label>
         <br>
-        <input class="form-label" placeholder="Escriba su correo" required name="correo" id="user">
+        <input type="email" class="form-label" placeholder="Escriba su correo" required name="correo" id="correo">
         <br>
-        <button action="credentials.php" >Enviar</button>
+        <button type="submit" >Enviar</button>
         <br>
         <br>
         <a href="register.php">Volver al login</a>
