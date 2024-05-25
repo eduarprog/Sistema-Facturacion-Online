@@ -2,16 +2,27 @@
 session_start();
 require_once("connection.php");
 
-$correo = $_POST["correo"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $correo = filter_var($_POST["correo"], FILTER_SANITIZE_EMAIL);
 
-$connection = connection();
+    if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        $connection = connection();
 
 $sql = "SELECT * FROM register WHERE correo = '$correo'";
-$resultado = $connection->query($sql);
+$stmt = $connection->prepare("SELECT * FROM register WHERE correo = ?");
+$stmt->bind_param("s", $correo);
+$stmt->execute();
+$resultado = $stmt->get_result();
 
 if ($resultado->num_rows > 0) {
     $_SESSION["register"] = $correo;
     header("Location: forgotpassword.php?success=1");
-} else {
+   } else {
     header("Location: forgotpassword.php?error=1");
+   }
+        $stmt->close();
+        $connection->close();
+
+    }
 }
+

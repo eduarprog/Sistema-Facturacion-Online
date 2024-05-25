@@ -12,7 +12,7 @@
 <body>
     <form action="email_check.php" method="post" >
     <?php if (isset($_GET["error"])) {
-            echo "<p>Usuario o contraseña incorrectos. Inténtalo de nuevo por favor.</p>";
+            echo "<p>Este correo no existe, favor probar con el correo correcto nuevamente.</p>";
           } ?>
            <?php if (isset($_GET["success"])) {
             echo "<p>Correo enviado exitosamente.</p>";
