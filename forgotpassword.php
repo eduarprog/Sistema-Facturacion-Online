@@ -22,7 +22,7 @@
         <br>
         <input type="email" class="form-label" placeholder="Escriba su correo" required name="correo" id="correo">
         <br>
-        <button type="submit" >Enviar</button>
+        <button  type="submit" >Enviar</button>
         <br>
         <br>
         <a href="register.php">Volver al login</a>

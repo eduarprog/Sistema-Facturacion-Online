@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("connection.php");
+require_once("credentials.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $correo = filter_var($_POST["correo"], FILTER_SANITIZE_EMAIL);
@@ -16,7 +17,7 @@ $resultado = $stmt->get_result();
 
 if ($resultado->num_rows > 0) {
     $_SESSION["register"] = $correo;
-    header("Location: forgotpassword.php?success=1");
+    header("Location: credentials.php");
    } else {
     header("Location: forgotpassword.php?error=1");
    }
