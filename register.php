@@ -41,22 +41,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h3>REGISTER</h3>
         <label class="form-label">Nombre</label>
         <br>
-        <input class="form-label" required name="nombre" value="" >
+        <input class="form-label" required name="nombre" value="<?php echo $nombre ?>" >
         <br>
         <label class="form-label">Correo</label>
         <br>
-        <input class="form-label" required name="correo" value="" >
+        <input type="email" class="form-label" required name="correo" value="<?php echo $correo ?>" >
         <br>
         <label class="form-label">Usuario</label>
         <br>
-        <input class="form-label" required name="usuario" value="">
+        <input class="form-label" required name="usuario" value="<?php echo $usuario ?>">
         <br>
         <label class="form-label">Contraseña</label>
         <br>
-        <input class="form-label" required name="contraseña" value="">
+        <input class="form-label" id="contra1" required name="contraseña" value="<?php echo $contraseña ?>">
+        <br>
+        <div id="error-message" style="display:none"></div>
+        <label class="form-label">Escribe la Contraseña nuevamente</label>
+        <br>
+        <input class="form-label" id="contra2" required >
         <br>
         <a href="login.php">Ir a pagina de inicio de sesion</a>
-        <button type="submit"  >Registrarse e iniciar sesion</button>
+        <button type="submit">Guardar</button>
     </form>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var contra1Value = document.getElementById('contra1').value;
+        var contra2Value = document.getElementById('contra2').value;
+
+            if (contra1Value !== contra2Value) {
+            var errorMessageElement = document.getElementById('error-message');
+            errorMessageElement.textContent = 'Los textos en los dos inputs no son iguales. Por favor, asegúrate de que coincidan.';
+            errorMessageElement.style.display = 'block';
+        } else {
+            this.submit();
+        }
+    });
+</script>
+
 </body>
 </html>
