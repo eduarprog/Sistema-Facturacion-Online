@@ -1,21 +1,31 @@
 <?php
 
 require_once "connection.php";
+$connection = connection();
 
-$nombre = $_POST['nombre'];
-$correo = filter_var($_POST['correo'], FILTER_SANITIZE_EMAIL);
-$usuario = $_POST['usuario'];
-$contraseña = $_POST['$contraseña'];
+$nombre = "";
+$correo = "";
+$usuario = "";
+$contraseña = "";
 
+
+$sql = "SELECT * FROM register WHERE correo = ?";
+$stmt = $connection->prepare($sql);
+$stmt->bind_param("s", $correo);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+if (!$row) {
+    header("location: forgotpassword.php");
+}
 
 $destinatario = filter_var($correo, FILTER_VALIDATE_EMAIL);
-$asunto = "Correo de recuperacion $nombre";
+$asunto = "Correo de recuperacion $nombre = {$row['nombre']} ";
 
-$carta = "Datos a continuacion; De: $nombre \n";
-$carta .= "Correo: $correo \n";
-$carta .= "Mensaje: $usuario\n";
-$carta .= "contrasena: $contraseña";
+$carta = "Datos a continuacion; $nombre = {$row['nombre']}; \n";
+$carta .= "Correo:  $correo = {$row['correo']}; \n";
+$carta .= "Mensaje: $usuario = {$row['usuario']};\n";
+$carta .= "contrasena: $contraseña = {$row['contraseña']};";
 
 mail($destinatario, $asunto, $carta);
-
-
